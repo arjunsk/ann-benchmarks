@@ -6,7 +6,6 @@ import threading
 import time
 from typing import Dict, Optional, Tuple, List, Union
 
-import colors
 import docker
 import numpy
 import psutil
@@ -340,7 +339,7 @@ def run_docker(
 
     def stream_logs():
         for line in container.logs(stream=True):
-            logger.info(colors.color(line.decode().rstrip(), fg="blue"))
+            logger.info(line.decode().rstrip())
 
     t = threading.Thread(target=stream_logs, daemon=True)
     t.start()
@@ -381,7 +380,7 @@ def _handle_container_return_value(
         msg = msg.format(exit_code)
 
     if exit_code not in [0, None]:
-        logger.error(colors.color(container.logs().decode(), fg="red"))
+        logger.error(container.logs().decode())
         logger.error(msg)
     else:
         logger.info(msg)
