@@ -14,7 +14,7 @@ RUN apt-get update && \
 # Dynamically set OPTFLAGS based on the architecture
 RUN ARCH=$(uname -m) && \
     cd /tmp/matrixone && \
-    make
+    make && \
     ./mo-service -debug-http :9876 -launch ./etc/launch/launch.toml >out.log  2>err.log;
 
 # Install MySQL server and client
