@@ -4,8 +4,7 @@ FROM ann-benchmarks
 # Install necessary packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    gcc-10 \
-    g++-10 \
+    g++-x86-64-linux-gnu libc6-dev-amd64-cross \
     tzdata \
     build-essential \
     wget \
