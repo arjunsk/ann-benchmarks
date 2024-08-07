@@ -4,13 +4,17 @@ FROM ann-benchmarks
 # Install necessary packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    g++-x86-64-linux-gnu libc6-dev-amd64-cross \
-    tzdata \
-    build-essential \
+    git \
+    cmake \
     wget \
-    mysql-client \
+    g++ \
+    python3 \
+    python3-setuptools \
     python3-pip \
-    python-is-python3 && \
+    libblas-dev \
+    liblapack-dev \
+    mysql-client \
+    tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -29,6 +33,7 @@ RUN git clone https://github.com/matrixorigin/matrixone /tmp/matrixone
 # Build MatrixOne
 WORKDIR /tmp/matrixone
 RUN go mod tidy && \
+    make clean && \
     make && \
     ./mo-service -debug-http :9876 -launch ./etc/launch/launch.toml >out.log 2>err.log
 
